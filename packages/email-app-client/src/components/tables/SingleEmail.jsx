@@ -45,7 +45,9 @@ function SingleEmail({ email, type, setEmailId, setModalOpen }) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>{email.text}</Box>
+            <Box margin={1} style={{ whiteSpace: "pre-wrap" }}>
+              {email.text}
+            </Box>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -58,6 +60,7 @@ const useRowStyles = makeStyles({
     "& > *": {
       borderBottom: "unset",
     },
+    textBox: { whiteSpace: "pre-wrap" },
   },
 });
 
