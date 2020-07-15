@@ -31,10 +31,10 @@ function MessagesFetch() {
           const { result } = data;
           let dispatchMessage;
           if (status === 204) {
-            toast.warning("User has no messages");
+            toast.warning("User has no emails");
             dispatchMessage = resetMessages();
           } else {
-            toast.success("Messages downloaded");
+            toast.success("emails downloaded");
             dispatchMessage = addMessages(result);
           }
           dispatchMessageData(dispatchMessage);
@@ -45,7 +45,7 @@ function MessagesFetch() {
         } catch (error) {
           const myError = error?.response?.data?.error
             ? error.response.data.error
-            : "error fetching messages";
+            : "error fetching emails";
           setStatus({ success: false });
           setSubmitting(false);
           setErrors({ submit: error.message });

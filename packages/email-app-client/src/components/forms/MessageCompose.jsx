@@ -21,11 +21,11 @@ function MessageCompose() {
           const { result } = await addMessage(values);
           resetForm({});
           setStatus({ success: true });
-          toast.success("Message sent!");
+          toast.success("email sent!");
         } catch (error) {
           const myError = error?.response?.data?.error
             ? error.response.data.error
-            : "error sending message";
+            : "error sending email";
           setStatus({ success: false });
           setSubmitting(false);
           setErrors({ submit: error.message });

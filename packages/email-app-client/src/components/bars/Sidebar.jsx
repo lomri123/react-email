@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import AddIconBox from "@material-ui/icons/AddBox";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
@@ -28,7 +29,7 @@ function Sidebar({ mobileOpen, handleDrawerToggle, ...props }) {
           <Link to={`/${text.toLowerCase()}`} className={classes.link}>
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 !== 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -37,11 +38,11 @@ function Sidebar({ mobileOpen, handleDrawerToggle, ...props }) {
       </List>
       <Divider />
       <List>
-        {["Compose"].map((text, index) => (
+        {["Compose"].map((text) => (
           <Link to={`/${text.toLowerCase()}`} className={classes.link}>
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <AddIconBox />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -102,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: "none",
+    color: "black",
   },
 }));
 

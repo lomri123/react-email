@@ -14,7 +14,7 @@ router.post("/", validationRules("fetchMessages"), validate, (req, res) => {
     result.sent.length === 0
   )
     status = 204;
-  res.send(status, { ...response });
+  res.status(status).send({ ...response });
 });
 
 router.post(
@@ -25,7 +25,7 @@ router.post(
     let status = 201;
     const response = addMessage(req.body);
     if (response.error !== "") status = 404;
-    if (response) res.send(status, { ...response });
+    res.status(status).send({ ...response });
   }
 );
 
