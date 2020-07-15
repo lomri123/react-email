@@ -6,7 +6,7 @@ import Sidebar from "../components/bars/Sidebar";
 import Topbar from "../components/bars/Topbar";
 import EmailContent from "./EmailContent";
 
-function EmailPage(props) {
+function EmailPage() {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -22,14 +22,6 @@ function EmailPage(props) {
     </div>
   );
 }
-
-EmailPage.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 const useStyles = makeStyles(() => ({
   root: {

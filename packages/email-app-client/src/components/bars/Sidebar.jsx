@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -19,6 +19,7 @@ function Sidebar({ mobileOpen, handleDrawerToggle, ...props }) {
   const { window } = props;
   const container =
     window !== undefined ? () => window().document.body : undefined;
+  const [selectedItem, setSelectedItem] = useState("received");
 
   const drawer = (
     <div>
@@ -26,8 +27,12 @@ function Sidebar({ mobileOpen, handleDrawerToggle, ...props }) {
       <Divider />
       <List>
         {["received", "Sent"].map((text, index) => (
-          <Link to={`/${text.toLowerCase()}`} className={classes.link}>
-            <ListItem button key={text}>
+          <Link
+            to={`/${text.toLowerCase()}`}
+            className={classes.link}
+            onClick={() => setSelectedItem(text)}
+          >
+            <ListItem button key={text} selected={selectedItem === text}>
               <ListItemIcon>
                 {index % 2 !== 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -39,8 +44,12 @@ function Sidebar({ mobileOpen, handleDrawerToggle, ...props }) {
       <Divider />
       <List>
         {["Compose"].map((text) => (
-          <Link to={`/${text.toLowerCase()}`} className={classes.link}>
-            <ListItem button key={text}>
+          <Link
+            to={`/${text.toLowerCase()}`}
+            className={classes.link}
+            onClick={() => setSelectedItem(text)}
+          >
+            <ListItem button key={text} selected={selectedItem === text}>
               <ListItemIcon>
                 <AddIconBox />
               </ListItemIcon>
@@ -106,5 +115,11 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
   },
 }));
+
+Sidebar.propTypes = {
+  mobileOpen: PropTypes.bool,
+  window: PropTypes.func,
+  handleDrawerToggle: PropTypes.func,
+};
 
 export default Sidebar;

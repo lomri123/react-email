@@ -37,4 +37,9 @@ function EmailsList({ messageData, type }) {
   );
 }
 
+EmailsList.propTypes = {
+  messageData: PropTypes.object,
+  type: PropTypes.string,
+};
+
 export default EmailsList;

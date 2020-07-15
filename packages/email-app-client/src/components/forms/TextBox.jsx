@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useField } from "formik";
 import { InputLabel, Input, FormControl } from "@material-ui/core";
 
@@ -13,4 +14,8 @@ export const TextBox = ({ label, ...props }) => {
       <span style={{ color: "red", marginTop: "5px" }}>{error}</span>
     </FormControl>
   );
+};
+
+TextBox.propTypes = {
+  label: PropTypes.string,
 };

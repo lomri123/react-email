@@ -7,7 +7,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
-function Topbar({ mobileOpen, handleDrawerToggle, ...props }) {
+function Topbar({ handleDrawerToggle }) {
   const classes = useStyles();
 
   return (
@@ -64,5 +64,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 }));
+
+Topbar.propTypes = {
+  handleDrawerToggle: PropTypes.func,
+};
 
 export default Topbar;

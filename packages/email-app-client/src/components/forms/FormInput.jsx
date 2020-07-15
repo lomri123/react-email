@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useField } from "formik";
 import { InputLabel, Input, FormControl } from "@material-ui/core";
 
@@ -15,4 +16,8 @@ export const FormInput = ({ label, ...props }) => {
       ) : null}
     </FormControl>
   );
+};
+
+FormInput.propTypes = {
+  label: PropTypes.string,
 };

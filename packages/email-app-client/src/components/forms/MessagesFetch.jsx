@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Formik } from "formik";
 import { Persist } from "formik-persist";
 import { ToastContainer, toast } from "react-toastify";
-import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import { Context } from "../../stores/Store";
 import { getMessages } from "../../services/messagesApi";
@@ -40,7 +39,6 @@ function MessagesFetch() {
           dispatchMessageData(dispatchMessage);
           const dispatchUser = setUser(values.userId);
           dispatchUserData(dispatchUser);
-          resetForm({});
           setStatus({ success: true });
         } catch (error) {
           const myError = error?.response?.data?.error
