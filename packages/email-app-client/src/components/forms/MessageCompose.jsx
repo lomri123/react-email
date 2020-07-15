@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Formik } from "formik";
 import { Persist } from "formik-persist";
 import { ToastContainer, toast } from "react-toastify";
+import { Context } from "../../stores/Store";
 import SubmitButton from "../buttons/SubmitButton";
 import { FormInput } from "./FormInput";
 import { messageSchema } from "../../validation/message";
 import { messageFormValues } from "../../utils/messageFormValues";
 import { addMessage } from "../../services/messagesApi";
 import { TextBox } from "./TextBox";
+import { addSingleMessage } from "./../../stores/actions/actions";
 
 function MessageCompose() {
+  const { dispatchMessageData } = useContext(Context);
   const classes = useStyles();
 
   return (
@@ -22,7 +25,8 @@ function MessageCompose() {
       ) => {
         try {
           const { result } = await addMessage(values);
-          console.log(result);
+          const dispatchMessage = addSingleMessage(result);
+          dispatchMessageData(dispatchMessage);
           resetForm({ messageFormValues });
           setStatus({ success: true });
           toast.success("email sent!");

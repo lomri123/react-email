@@ -10,8 +10,8 @@ const reducer = (state, action) => {
     case ADD_MESSAGES:
       return messages;
     case ADD_MESSAGE:
-      const tmpState = state[type].push(message);
-      return tmpState;
+      state["sent"].push(message);
+      return state;
     case RESET_MESSAGES:
       return { sent: [], received: [] };
     default:

@@ -5,8 +5,8 @@ import {
   RESET_MESSAGES,
 } from "./actionTypes";
 
-export const addMessage = (message) => {
-  return { type: ADD_MESSAGE, ...message };
+export const addSingleMessage = (message) => {
+  return { type: ADD_MESSAGE, message };
 };
 
 export const addMessages = (messages) => {
