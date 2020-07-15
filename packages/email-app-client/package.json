@@ -12,6 +12,7 @@
     "eslint": "6.6.0",
     "formik": "^2.1.4",
     "formik-persist": "^1.1.0",
+    "moment": "^2.27.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

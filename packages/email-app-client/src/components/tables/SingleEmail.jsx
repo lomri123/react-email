@@ -8,10 +8,12 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import formatDatetime from "./../../utils/formatDateTime";
 
-function SingleEmail({ email }) {
+function SingleEmail({ email, type }) {
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
+  console.log(email.subject);
 
   return (
     <>
@@ -26,10 +28,11 @@ function SingleEmail({ email }) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {email.name}
+          {type === "sent" ? email["receiver"] : email["sender"]}
         </TableCell>
-        <TableCell align="right">{email.subject}</TableCell>
-        <TableCell align="right">{email.date}</TableCell>
+        <TableCell>{email.subject}</TableCell>
+        <TableCell>{formatDatetime(email.createDate)}</TableCell>
+        <TableCell>delete</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -57,6 +60,7 @@ SingleEmail.propTypes = {
     date: PropTypes.string,
     text: PropTypes.string,
   }),
+  type: PropTypes.string,
 };
 
 export default SingleEmail;

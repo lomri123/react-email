@@ -24,8 +24,10 @@ export const getMessages = (userId) => {
 };
 
 export const addMessage = (messageData) => {
+  const currentDate = new Date();
   const data = {
     ...messageData,
+    createDate: currentDate,
   };
   const options = {
     url: "http://localhost:3008/api/messages/addMessage",

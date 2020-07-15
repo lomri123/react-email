@@ -22,13 +22,13 @@ function EmailsList({ messageData, type }) {
               <TableCell size="small" />
               <TableCell>Name</TableCell>
               <TableCell>Subject</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell>Creation Date</TableCell>
               <TableCell size="small">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {emails.map((email) => (
-              <SingleEmail key={email.messageId} email={email} />
+              <SingleEmail key={email.messageId} email={email} type={type} />
             ))}
           </TableBody>
         </Table>
