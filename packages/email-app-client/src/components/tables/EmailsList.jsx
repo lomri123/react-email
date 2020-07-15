@@ -12,8 +12,6 @@ import MessagesFetch from "./../forms/MessagesFetch";
 
 function EmailsList({ messageData, type }) {
   const emails = messageData[type] || [];
-  console.log(messageData);
-
   return (
     <>
       <MessagesFetch />

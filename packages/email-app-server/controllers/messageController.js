@@ -5,9 +5,16 @@ const { addMessage, fetchMessages } = require("../databases/messageDB");
 router.post("/", validationRules("fetchMessages"), validate, (req, res) => {
   const { userId } = req.body;
   let status = 201;
-  const result = fetchMessages(userId);
-  if (result.error !== "") status = 404;
-  res.send(status, { ...result });
+  const response = fetchMessages(userId);
+  const { error, result } = response;
+  if (error !== "") status = 404;
+  if (
+    status !== 404 &&
+    result.received.length === 0 &&
+    result.sent.length === 0
+  )
+    status = 204;
+  res.send(status, { ...response });
 });
 
 router.post(
@@ -16,9 +23,9 @@ router.post(
   validate,
   (req, res) => {
     let status = 201;
-    const result = addMessage(req.body);
-    if (result.error !== "") status = 404;
-    res.send(status, { ...result });
+    const response = addMessage(req.body);
+    if (response.error !== "") status = 404;
+    if (response) res.send(status, { ...response });
   }
 );
 

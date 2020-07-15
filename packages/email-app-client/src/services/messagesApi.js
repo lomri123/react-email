@@ -15,7 +15,7 @@ export const getMessages = (userId) => {
   return new Promise((res, rej) => {
     axios(options)
       .then(function (response) {
-        res(response.data);
+        res(response);
       })
       .catch(function (error) {
         rej(error);

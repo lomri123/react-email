@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
 import { Persist } from "formik-persist";
+import { ToastContainer, toast } from "react-toastify";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import { Context } from "../../stores/Store";
@@ -8,7 +9,11 @@ import { getMessages } from "../../services/messagesApi";
 import SubmitButton from "../buttons/SubmitButton";
 import { FormInput } from "./FormInput";
 import { userSchema } from "./../../validation/user";
-import { addMessages, setUser } from "../../stores/actions/actions";
+import {
+  addMessages,
+  setUser,
+  resetMessages,
+} from "../../stores/actions/actions";
 
 function MessagesFetch() {
   const { dispatchMessageData, dispatchUserData } = useContext(Context);
@@ -17,16 +22,34 @@ function MessagesFetch() {
   return (
     <Formik
       initialValues={{ userId: "" }}
-      onSubmit={async (values) => {
+      onSubmit={async (
+        values,
+        { setSubmitting, setErrors, setStatus, resetForm }
+      ) => {
         try {
-          const { result } = await getMessages(values.userId);
-          console.log(result);
-          const dispatchMessage = addMessages(result);
+          const { data, status } = await getMessages(values.userId);
+          const { result } = data;
+          let dispatchMessage;
+          if (status === 204) {
+            toast.warning("User has no messages");
+            dispatchMessage = resetMessages();
+          } else {
+            toast.success("Messages downloaded");
+            dispatchMessage = addMessages(result);
+          }
           dispatchMessageData(dispatchMessage);
           const dispatchUser = setUser(values.userId);
           dispatchUserData(dispatchUser);
+          resetForm({});
+          setStatus({ success: true });
         } catch (error) {
-          console.log("error", error);
+          const myError = error?.response?.data?.error
+            ? error.response.data.error
+            : "error fetching messages";
+          setStatus({ success: false });
+          setSubmitting(false);
+          setErrors({ submit: error.message });
+          toast.error(myError);
         }
       }}
       validationSchema={userSchema}
@@ -46,6 +69,7 @@ function MessagesFetch() {
               </div>
             </form>
             <Persist name="messagesFetch" />
+            <ToastContainer position="top-center" />
           </>
         );
       }}
@@ -58,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     backgroundColor: theme.palette.background.default,
     paddingBottom: theme.spacing(3),
-    width: "300px",
+    width: "250px",
   },
   button: {
     marginTop: "23px",

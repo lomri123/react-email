@@ -10,7 +10,7 @@ export const TextBox = ({ label, ...props }) => {
     <FormControl margin="normal" fullWidth>
       <InputLabel htmlFor={id || name}>{id || name}</InputLabel>
       <Input multiline rows={10} {...field} {...props} />
-      {touched && error ? error : null}
+      <span style={{ color: "red", marginTop: "5px" }}>{error}</span>
     </FormControl>
   );
 };

@@ -3,7 +3,7 @@ import messageReducer from "./reducers/messageReducer";
 import userReducer from "./reducers/userReducer";
 export const Context = React.createContext();
 
-const initialMessageList = {};
+const initialMessageList = { sent: [], received: [] };
 const initialUser = "";
 
 function Provider(props) {

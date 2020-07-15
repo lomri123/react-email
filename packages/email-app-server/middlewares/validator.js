@@ -36,7 +36,6 @@ const validate = (req, res, next) => {
     return next();
   }
   const extractedErrors = [];
-  console.log("errors", errors);
   errors
     .array({ onlyFirstError: true })
     .map((err) => extractedErrors.push({ [err.param]: err.msg }));

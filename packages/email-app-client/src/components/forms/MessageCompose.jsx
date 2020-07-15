@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import { Persist } from "formik-persist";
+import { ToastContainer, toast } from "react-toastify";
 import SubmitButton from "../buttons/SubmitButton";
 import { FormInput } from "./FormInput";
 import { messageSchema } from "../../validation/message";
@@ -12,12 +13,23 @@ function MessageCompose() {
   return (
     <Formik
       initialValues={messageFormValues}
-      onSubmit={async (values) => {
+      onSubmit={async (
+        values,
+        { setSubmitting, setErrors, setStatus, resetForm }
+      ) => {
         try {
           const { result } = await addMessage(values);
-          console.log("result", result);
+          resetForm({});
+          setStatus({ success: true });
+          toast.success("Message sent!");
         } catch (error) {
-          console.log("error", error);
+          const myError = error?.response?.data?.error
+            ? error.response.data.error
+            : "error sending message";
+          setStatus({ success: false });
+          setSubmitting(false);
+          setErrors({ submit: error.message });
+          toast.error(myError);
         }
       }}
       validationSchema={messageSchema}
@@ -44,6 +56,7 @@ function MessageCompose() {
               </form>
             </div>
             <Persist name="newMessage" />
+            <ToastContainer position="top-center" />
           </form>
         );
       }}
