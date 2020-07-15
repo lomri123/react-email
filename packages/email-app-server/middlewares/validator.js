@@ -36,23 +36,17 @@ const validate = (req, res, next) => {
     return next();
   }
   const extractedErrors = [];
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
+  console.log("errors", errors);
+  errors
+    .array({ onlyFirstError: true })
+    .map((err) => extractedErrors.push({ [err.param]: err.msg }));
 
   return res.status(422).json({
     errors: extractedErrors,
   });
 };
-const stringValidate = (str) => {
-  let error = "";
-  if (str.length === 0 || !str.trim())
-    error = "string is empty, null or undefined";
-  if (!str || /^\s*$/.test(str)) error = "string is blank, null or undefined";
-  if (!str || 0 === str.length) error = "string is blank";
-  return error;
-};
 
 module.exports = {
   validationRules,
   validate,
-  stringValidate,
 };

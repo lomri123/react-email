@@ -7,7 +7,7 @@ router.post("/", validationRules("fetchMessages"), validate, (req, res) => {
   let status = 201;
   const result = fetchMessages(userId);
   if (result.error !== "") status = 404;
-  res.status(status).send(result);
+  res.send(status, { ...result });
 });
 
 router.post(
@@ -18,7 +18,7 @@ router.post(
     let status = 201;
     const result = addMessage(req.body);
     if (result.error !== "") status = 404;
-    res.status(status).send(result);
+    res.send(status, { ...result });
   }
 );
 
