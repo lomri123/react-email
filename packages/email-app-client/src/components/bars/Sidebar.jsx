@@ -31,6 +31,7 @@ function Sidebar({ mobileOpen, handleDrawerToggle, ...props }) {
             to={`/${text.toLowerCase()}`}
             className={classes.link}
             onClick={() => setSelectedItem(text)}
+            key={text}
           >
             <ListItem button key={text} selected={selectedItem === text}>
               <ListItemIcon>
@@ -48,6 +49,7 @@ function Sidebar({ mobileOpen, handleDrawerToggle, ...props }) {
             to={`/${text.toLowerCase()}`}
             className={classes.link}
             onClick={() => setSelectedItem(text)}
+            key={text}
           >
             <ListItem button key={text} selected={selectedItem === text}>
               <ListItemIcon>

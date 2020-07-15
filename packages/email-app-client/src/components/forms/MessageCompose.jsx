@@ -1,4 +1,5 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { Formik } from "formik";
 import { Persist } from "formik-persist";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,6 +11,8 @@ import { addMessage } from "../../services/messagesApi";
 import { TextBox } from "./TextBox";
 
 function MessageCompose() {
+  const classes = useStyles();
+
   return (
     <Formik
       initialValues={messageFormValues}
@@ -19,7 +22,8 @@ function MessageCompose() {
       ) => {
         try {
           const { result } = await addMessage(values);
-          resetForm({});
+          console.log(result);
+          resetForm({ messageFormValues });
           setStatus({ success: true });
           toast.success("email sent!");
         } catch (error) {
@@ -37,24 +41,13 @@ function MessageCompose() {
       {(props) => {
         const { handleSubmit } = props;
         return (
-          <form onSubmit={handleSubmit}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                margin: 20,
-                padding: 20,
-              }}
-            >
-              <form style={{ width: "50%" }}>
-                <h1>Send Mail</h1>
-                <FormInput name="subject" />
-                <FormInput name="sender" />
-                <FormInput name="receiver" />
-                <TextBox name="text" />
-                <SubmitButton />
-              </form>
-            </div>
+          <form onSubmit={handleSubmit} className={classes.form}>
+            <h1>Send Mail</h1>
+            <FormInput name="subject" />
+            <FormInput name="sender" />
+            <FormInput name="receiver" />
+            <TextBox name="text" label="message text" />
+            <SubmitButton />
             <Persist name="newMessage" />
             <ToastContainer position="top-center" />
           </form>
@@ -63,5 +56,15 @@ function MessageCompose() {
     </Formik>
   );
 }
+
+const useStyles = makeStyles(() => ({
+  form: {
+    maxWidth: "450px",
+    margin: 20,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: "10px",
+  },
+}));
 
 export default MessageCompose;
