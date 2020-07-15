@@ -19,10 +19,14 @@ const validationRules = (action) => {
         body("userId", "Invalid user id").exists().isString().not().isEmpty(),
       ];
     }
-    case "removeMessage": {
+    case "deleteMessage": {
       return [
-        body("id", "Invalid message id").exists().isString().not().isEmpty(),
-        body("sender", "Invalid sender").exists().isString().not().isEmpty(),
+        body("messageId", "Invalid message id")
+          .exists()
+          .isString()
+          .not()
+          .isEmpty(),
+        body("deleteType", "Invalid type").exists().isString().not().isEmpty(),
       ];
     }
     default:

@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const { validationRules, validate } = require("../middlewares/validator");
-const { addMessage, fetchMessages } = require("../databases/messageDB");
+const {
+  addMessage,
+  fetchMessages,
+  deleteMessage,
+} = require("../databases/messageDB");
 
 router.post("/", validationRules("fetchMessages"), validate, (req, res) => {
   const { userId } = req.body;
@@ -25,6 +29,21 @@ router.post(
     let status = 201;
     const response = addMessage(req.body);
     if (response.error !== "") status = 404;
+    res.status(status).send({ ...response });
+  }
+);
+
+router.post(
+  "/deleteMessage",
+  validationRules("deleteMessage"),
+  validate,
+  (req, res) => {
+    console.log("deleteMessage", req.body);
+    const { messageId, deleteType } = req.body;
+    let status = 200;
+    const response = deleteMessage(messageId, deleteType);
+    const { error, result } = response;
+    if (error !== "") status = 404;
     res.status(status).send({ ...response });
   }
 );

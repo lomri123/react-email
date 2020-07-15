@@ -13,11 +13,19 @@ function EmailContent() {
     <main className={classes.content}>
       <div className={classes.toolbar} />
       <Switch>
-        <Route exact path="/received">
-          <EmailsList type="received" messageData={messageData} />
+        <Route path="/received">
+          <EmailsList
+            type="received"
+            messageData={messageData}
+            dispatchMessageData={dispatchMessageData}
+          />
         </Route>
         <Route path="/sent">
-          <EmailsList type="sent" messageData={messageData} />
+          <EmailsList
+            type="sent"
+            messageData={messageData}
+            dispatchMessageData={dispatchMessageData}
+          />
         </Route>
         <Route path="/compose">
           <MessageCompose dispatchMessageData={dispatchMessageData} />

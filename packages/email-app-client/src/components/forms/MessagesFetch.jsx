@@ -15,16 +15,13 @@ import {
 } from "../../stores/actions/actions";
 
 function MessagesFetch() {
-  const { dispatchMessageData, dispatchUserData } = useContext(Context);
+  const { dispatchMessageData, dispatchActiveUser } = useContext(Context);
   const classes = useStyles();
 
   return (
     <Formik
       initialValues={{ userId: "" }}
-      onSubmit={async (
-        values,
-        { setSubmitting, setErrors, setStatus, resetForm }
-      ) => {
+      onSubmit={async (values, { setSubmitting, setErrors, setStatus }) => {
         try {
           const { data, status } = await getMessages(values.userId);
           const { result } = data;
@@ -38,7 +35,7 @@ function MessagesFetch() {
           }
           dispatchMessageData(dispatchMessage);
           const dispatchUser = setUser(values.userId);
-          dispatchUserData(dispatchUser);
+          dispatchActiveUser(dispatchUser);
           setStatus({ success: true });
         } catch (error) {
           const myError = error?.response?.data?.error
@@ -67,7 +64,7 @@ function MessagesFetch() {
               </div>
             </form>
             <Persist name="messagesFetch" />
-            <ToastContainer position="top-center" />
+            <ToastContainer hideProgressBar={true} />
           </>
         );
       }}

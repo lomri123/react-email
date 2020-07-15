@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
+import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -10,11 +11,14 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import formatDatetime from "./../../utils/formatDateTime";
 
-function SingleEmail({ email, type }) {
+function SingleEmail({ email, type, setEmailId, setModalOpen }) {
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
-  console.log(email.subject);
 
+  const handleDeleteClick = (id) => {
+    setModalOpen(true);
+    setEmailId(id);
+  };
   return (
     <>
       <TableRow className={classes.root}>
@@ -32,7 +36,11 @@ function SingleEmail({ email, type }) {
         </TableCell>
         <TableCell>{email.subject}</TableCell>
         <TableCell>{formatDatetime(email.createDate)}</TableCell>
-        <TableCell>delete</TableCell>
+        <TableCell>
+          <IconButton onClick={() => handleDeleteClick(email.messageId)}>
+            <DeleteIcon />
+          </IconButton>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -61,6 +69,7 @@ SingleEmail.propTypes = {
     text: PropTypes.string,
   }),
   type: PropTypes.string,
+  deleteEmail: PropTypes.func,
 };
 
 export default SingleEmail;

@@ -13,7 +13,7 @@ import { TextBox } from "./TextBox";
 import { addSingleMessage } from "./../../stores/actions/actions";
 
 function MessageCompose() {
-  const { dispatchMessageData } = useContext(Context);
+  const { dispatchMessageData, activeUser } = useContext(Context);
   const classes = useStyles();
 
   return (
@@ -25,8 +25,11 @@ function MessageCompose() {
       ) => {
         try {
           const { result } = await addMessage(values);
-          const dispatchMessage = addSingleMessage(result);
-          dispatchMessageData(dispatchMessage);
+          if (result.sender === activeUser || result.receiver === activeUser) {
+            const type = result.sender === activeUser ? "sent" : "received";
+            const dispatchMessage = addSingleMessage(result, type);
+            dispatchMessageData(dispatchMessage);
+          }
           resetForm({ messageFormValues });
           setStatus({ success: true });
           toast.success("email sent!");
@@ -53,7 +56,7 @@ function MessageCompose() {
             <TextBox name="text" label="message text" />
             <SubmitButton />
             <Persist name="newMessage" />
-            <ToastContainer position="top-center" />
+            <ToastContainer hideProgressBar={true} />
           </form>
         );
       }}
@@ -64,7 +67,7 @@ function MessageCompose() {
 const useStyles = makeStyles(() => ({
   form: {
     maxWidth: "450px",
-    margin: 20,
+    margin: "0 auto",
     padding: 20,
     backgroundColor: "white",
     borderRadius: "10px",

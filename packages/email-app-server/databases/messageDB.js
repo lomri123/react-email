@@ -1,7 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 
 const messages = {};
-const users = { 123: {}, 456: {}, 789: {} };
+const users = {
+  123: { sent: [], received: [] },
+  456: { sent: [], received: [] },
+  789: { sent: [], received: [] },
+};
 
 function addMessage(message) {
   const { sender, receiver } = message;
@@ -26,12 +30,42 @@ function addMessage(message) {
   return response;
 }
 
-// function deleteMessage(message) {
-//   const {}
-//   if(users?.userId?.
+function deleteMessage(messageId, deleteType) {
+  const response = { result: {}, error: "" };
+  if (messages[messageId] === undefined) {
+    response.error = "email doesn't exist in the DB";
+    return response;
+  }
+  const message = messages[messageId];
+  const { sender, receiver } = message;
+  const userToDelete = deleteType === "sent" ? sender : receiver;
+  const secondUser = deleteType === "sent" ? receiver : sender;
+  if (users[userToDelete] === undefined) {
+    response.error = "user doesn't exist in the DB";
+    return response;
+  }
+  const firstIndex = users[userToDelete][deleteType].findIndex(
+    (emails) => emails === messageId
+  );
+  if (firstIndex === -1) {
+    response.error = "email doesn't exist in the DB";
+    return response;
+  }
+  users[userToDelete][deleteType].splice(firstIndex, 1);
+  response.result = message;
 
-//   }
-// }
+  //checking if we can delete the message completely from the db
+  if (users[secondUser] !== undefined) {
+    const oppositeDeleteType = deleteType === "sent" ? "received" : "sent";
+    const secondIndex = users[secondUser][oppositeDeleteType].findIndex(
+      (email) => email === messageId
+    );
+    if (secondIndex === -1) {
+      delete messages[messageId];
+    }
+  }
+  return response;
+}
 
 function fetchMessages(userId) {
   const sentMessages = [];
@@ -61,6 +95,6 @@ function fetchMessages(userId) {
 
 module.exports = {
   addMessage,
-  // deleteMessage,
+  deleteMessage,
   fetchMessages,
 };

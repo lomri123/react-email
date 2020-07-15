@@ -11,15 +11,15 @@ function Provider(props) {
     messageReducer,
     initialMessageList
   );
-  const [userData, dispatchUserData] = useReducer(userReducer, initialUser);
+  const [activeUser, dispatchActiveUser] = useReducer(userReducer, initialUser);
 
   return (
     <Context.Provider
       value={{
         messageData,
         dispatchMessageData,
-        userData,
-        dispatchUserData,
+        activeUser,
+        dispatchActiveUser,
       }}
     >
       {props.children}
