@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useField } from "formik";
-import { InputLabel, TextField, FormControl } from "@material-ui/core";
+import { TextField, FormControl } from "@material-ui/core";
 
 export const TextBox = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   const { touched, error } = meta;
-  const { name, id } = props;
+  const { name } = props;
   return (
     <FormControl margin="normal" fullWidth>
       <TextField

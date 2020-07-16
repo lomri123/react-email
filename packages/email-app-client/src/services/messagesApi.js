@@ -30,7 +30,7 @@ export const deleteMessage = (messageId, deleteType) => {
   };
   const options = {
     url: "http://localhost:3008/api/messages/deleteMessage",
-    method: "POST",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
@@ -65,6 +65,29 @@ export const addMessage = (messageData) => {
     axios(options)
       .then(function (response) {
         res(response.data);
+      })
+      .catch(function (error) {
+        rej(error);
+      });
+  });
+};
+
+export const getUsers = (userId) => {
+  const data = {
+    userId,
+  };
+  const options = {
+    url: "http://localhost:3008/api/messages/getUsers",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data,
+  };
+  return new Promise((res, rej) => {
+    axios(options)
+      .then(function (response) {
+        res(response);
       })
       .catch(function (error) {
         rej(error);

@@ -16,7 +16,10 @@ function EmailPage() {
     <div className={classes.root}>
       <CssBaseline />
       <Topbar handleDrawerToggle={handleDrawerToggle} />
-      <Sidebar handleDrawerToggle={handleDrawerToggle} />
+      <Sidebar
+        handleDrawerToggle={handleDrawerToggle}
+        mobileOpen={mobileOpen}
+      />
       <EmailContent />
     </div>
   );

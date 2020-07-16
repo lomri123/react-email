@@ -67,7 +67,7 @@ function deleteMessage(messageId, deleteType) {
   return response;
 }
 
-function fetchMessages(userId) {
+function getMessages(userId) {
   const sentMessages = [];
   const receivedMessages = [];
   const response = { result: {}, error: "" };
@@ -93,8 +93,16 @@ function fetchMessages(userId) {
   return response;
 }
 
+function getUsers(userId) {
+  const userkeys = Object.keys(users);
+  return userkeys.filter((user) =>
+    user.toLowerCase().includes(userId.toLowerCase())
+  );
+}
+
 module.exports = {
   addMessage,
   deleteMessage,
-  fetchMessages,
+  getMessages,
+  getUsers,
 };

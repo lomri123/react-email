@@ -14,7 +14,7 @@ const validationRules = (action) => {
         body("text", "Invalid message body").exists().isString(),
       ];
     }
-    case "fetchMessages": {
+    case "getMessages": {
       return [
         body("userId", "Invalid user id").exists().isString().not().isEmpty(),
       ];
@@ -27,6 +27,11 @@ const validationRules = (action) => {
           .not()
           .isEmpty(),
         body("deleteType", "Invalid type").exists().isString().not().isEmpty(),
+      ];
+    }
+    case "getUsers": {
+      return [
+        body("userId", "Invalid user id").exists().isString().not().isEmpty(),
       ];
     }
     default:
