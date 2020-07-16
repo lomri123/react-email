@@ -18,6 +18,13 @@ export default function AsyncSearch() {
   const loading = open && options.length === 0;
   const [userInput, setUserInput] = useState("");
 
+  const handleClearClick = () => {
+    const dispatchMessage = resetMessages();
+    dispatchMessageData(dispatchMessage);
+    const dispatchUser = setUser("");
+    dispatchActiveUser(dispatchUser);
+  };
+
   const handleSearchSelect = async (userId) => {
     if (userId === "" || userId === null) {
       handleClearClick();
@@ -43,11 +50,6 @@ export default function AsyncSearch() {
         toast.error(myError);
       }
     }
-  };
-
-  const handleClearClick = () => {
-    const dispatchMessage = resetMessages();
-    dispatchMessageData(dispatchMessage);
   };
 
   useEffect(() => {
