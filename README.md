@@ -4,7 +4,7 @@ Email app using React+ Context frontend, Node.js + Express backend
 
 ```bash
 $ git clone https://github.com/lomri123/Omri-Levi-12-07-2020
-$ cd omri-unicargo
+$ cd Omri-Levi-12-07-2020
 $ npx lerna bootstrap
 $ yarn install
 ```
