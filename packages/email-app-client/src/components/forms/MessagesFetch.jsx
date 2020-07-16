@@ -62,7 +62,6 @@ export default function AsyncSearch() {
 
     (async () => {
       const { data: users } = await getUsers(userInput);
-      console.log(users);
 
       if (active) {
         setOptions(users);
