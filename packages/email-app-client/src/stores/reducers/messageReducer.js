@@ -16,11 +16,12 @@ const reducer = (state, action) => {
     case RESET_MESSAGES:
       return { sent: [], received: [] };
     case DELETE_MESSAGE:
-      let tmpState = state;
+      const tmpState = { ...state };
       if (state[messageType] !== undefined) {
-        tmpState = state[messageType].filter(
+        let filteredMessages = state[messageType].filter(
           (message) => message.messageId !== messageId
         );
+        tmpState[messageType] = filteredMessages;
       }
       return tmpState;
     default:
